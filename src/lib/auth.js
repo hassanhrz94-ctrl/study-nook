@@ -1,16 +1,28 @@
 import { betterAuth } from "better-auth";
 import { MongoClient } from "mongodb";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
+import { jwt } from "better-auth/plugins";
 
 const client = new MongoClient(process.env.MONGO_URI);
-const db = client.db('store-nook');
+
+await client.connect(); // IMPORTANT
+
+const db = client.db("study-nook");
 
 export const auth = betterAuth({
-  database: mongodbAdapter(db, {
-    // Optional: if you don't provide a client, database transactions won't be enabled.
-    client
-  }),
-    emailAndPassword: {
+  database: mongodbAdapter(db),
+
+  emailAndPassword: {
     enabled: true,
   },
+
+  session: {
+    cookieCache: {
+      enabled: true,
+      strategy: "jwt",
+      maxAge: 5 * 24 * 60 * 60,
+    },
+  },
+
+  plugins: [jwt()],
 });
