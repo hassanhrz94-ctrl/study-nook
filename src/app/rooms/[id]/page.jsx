@@ -1,3 +1,4 @@
+import EnrollmentButton from '@/components/EnrollmentButton';
 import { auth } from '@/lib/auth';
 
 import { headers } from 'next/headers';
@@ -35,6 +36,7 @@ const RoomDetailsPage = async({params}) => {
                         <p>Floor: {floor}</p>
                         <p>Hourly Rate: {hourlyRate}</p>
                         <img src={thumbnail} alt={roomName} />
+                            <EnrollmentButton roomDetails={roomDetails} />
                     </div>
                 )
             }

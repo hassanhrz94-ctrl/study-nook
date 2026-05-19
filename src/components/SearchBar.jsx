@@ -19,7 +19,7 @@ const SearchBar = () => {
     } else {
       params.delete("searchTerm")
     }
-    router.push(`/courses?${params.toString()}`)
+    router.push(`/books?${params.toString()}`)
 
 
   }
