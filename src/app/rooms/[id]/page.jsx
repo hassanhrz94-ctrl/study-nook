@@ -1,19 +1,28 @@
-import { fetchRooms } from '@/lib/booksData';
+import { auth } from '@/lib/auth';
+
+import { headers } from 'next/headers';
 import React from 'react';
 
-const fetchRoomDetails = async (id) => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/books/${id}`);
+const fetchRoomDetails = async (id, token) => {
+     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/books/${id}`, {
+        headers: {
+            authorization: `Bearer ${token}` || ""
+        }
+    });
     const data = await res.json();
-    return data || null;
+    return data || {};
+
 }
 
 
 const RoomDetailsPage = async({params}) => {
     const {id} = await params;
-
-    const roomDetails = await fetchRoomDetails(id);
+ const { token } = await auth.api.getToken({
+        headers: await headers(),
+    });
+    const roomDetails = await fetchRoomDetails(id, token);
     console.log(roomDetails);
-    const {roomName, description, _id, seatCapacity, floor, hourlyRate, thumbnail} = roomDetails || {};
+    const { _id, roomName, description,  seatCapacity, floor, hourlyRate, thumbnail} = roomDetails || {};
     return (
         <div>
             this is room details page
