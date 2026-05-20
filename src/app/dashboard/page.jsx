@@ -93,7 +93,7 @@ export default async function DashboardPage() {
                                                 Active
                                             </Chip>
 
-                                            <CancelEnrollButton enrolmentId={enrollment?._id} />
+                                            <CancelEnrollButton enrolmentId={enrollment?._id} token={token} />
                                         </div>
                                     </div>
                                 </div>

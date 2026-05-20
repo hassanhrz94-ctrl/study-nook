@@ -49,6 +49,7 @@ export function MainNavbar() {
             <Link href="/" className="font-medium text-slate-700 hover:text-blue-600 transition-colors">Home</Link>
             <Link href="/rooms" className="font-medium text-slate-700 hover:text-blue-600 transition-colors">Rooms</Link>
             <Link href="/add-room" className="font-medium text-slate-700 hover:text-blue-600 transition-colors">Add Room</Link>
+            <Link href="/my-listings" className="font-medium text-slate-700 hover:text-blue-600 transition-colors">My Listings</Link>
             <Link href="/dashboard" className="font-medium text-slate-700 hover:text-blue-600 transition-colors">Dashboard</Link>
           </div>
 
@@ -116,6 +117,7 @@ export function MainNavbar() {
           <Link href="/" className="block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-50 rounded-xl">Home</Link>
           <Link href="/rooms" className="block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-50 rounded-xl">Rooms</Link>
           <Link href="/add-room" className="block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-50 rounded-xl">Add Room</Link>
+          <Link href="/my-listings" className="block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-50 rounded-xl">my Listings</Link>
           <Link href="/dashboard" className="block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-50 rounded-xl">Dashboard</Link>
           <div className="pt-4 border-t border-border mt-4">
 

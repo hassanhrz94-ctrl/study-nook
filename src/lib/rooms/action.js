@@ -22,20 +22,33 @@ export const addRoom = async (formData) => {
 
   return data;
 };
-export const deleteEnrollment = async (id) => {
-  const { token } = await auth.api.getToken({
-    headers: await headers(),
-  });
+export const deleteEnrollment = async (id, token) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/booking/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/books/${id}`, {
-    method: 'DELETE',
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  if (!res.ok) return null;
-  const data = await res.json();
-  //   console.log(data);
+    const text = await res.text(); 
 
-  return data;
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch (e) {
+      console.log("Invalid JSON response:", text);
+      return null;
+    }
+
+    if (!res.ok) return null;
+
+    return data;
+  } catch (err) {
+    console.log("Delete error:", err);
+    return null;
+  }
 };
