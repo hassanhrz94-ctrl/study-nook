@@ -1,9 +1,22 @@
 "use client";
 
 
-import { AlertDialog, Button } from "@heroui/react";
 
-const CancelEnrollButton = () => {
+import { deleteEnrollment } from "@/lib/rooms/action";
+import { AlertDialog, Button } from "@heroui/react";
+import { useRouter } from "next/navigation";
+
+const CancelEnrollButton = ({ enrolmentId }) => {
+    const router = useRouter();
+    const handleDeleteEnrollment = async () => {
+
+        const data = await deleteEnrollment(enrolmentId);
+        // console.log(data);
+        if (data?.deletedCount) {
+            router.push("/")
+        }
+
+    }
 
     return (
         <AlertDialog>
@@ -39,6 +52,7 @@ const CancelEnrollButton = () => {
                                 slot="close"
                                 color="danger"
                                 className="font-bold"
+                                onPress={handleDeleteEnrollment}
 
                             >
                                 Yes, Cancel

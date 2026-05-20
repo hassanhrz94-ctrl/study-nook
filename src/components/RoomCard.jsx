@@ -6,6 +6,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 const RoomCard = ({ room }) => {
   const {
@@ -23,15 +24,16 @@ const RoomCard = ({ room }) => {
       {/* Image Section */}
       <div className="relative h-60 overflow-hidden">
         <Image
-          src={
-            thumbnail ||
-            "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200"
-          }
-          alt={roomName}
-          fill
-          className="object-cover group-hover:scale-110 transition-transform duration-700"
-        />
-
+    src={
+      thumbnail?.trim()
+        ? thumbnail
+        : "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200"
+    }
+    alt={roomName || "Room Image"}
+    fill
+    sizes="100vw"
+    className="object-cover group-hover:scale-110 transition-transform duration-700"
+  />
         {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
@@ -115,7 +117,9 @@ const RoomCard = ({ room }) => {
             className="font-semibold px-6"
             endContent={<ArrowRight className="w-4 h-4" />}
           >
-            Book Now
+            <Link href={`/rooms/${room._id}`} className="flex items-center gap-2">
+              View Details
+            </Link>
           </Button>
         </div>
       </div>

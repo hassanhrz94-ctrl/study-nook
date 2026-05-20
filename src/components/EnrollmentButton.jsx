@@ -67,7 +67,7 @@ export default function EnrollmentButton({ roomDetails }) {
             className="w-full font-bold shadow-lg mt-4"
             onPress={handleEnroll}
         >
-            Enroll Now
+            Book Now
         </Button>
     );
 }

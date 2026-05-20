@@ -86,7 +86,7 @@ const RoomDetailsPage = async ({ params }) => {
                         </div>
                     </div>
 
-                    {/* Button */}
+                
                     <div className="pt-6">
                         <EnrollmentButton roomDetails={roomDetails} />
                     </div>
