@@ -50,7 +50,7 @@ export function MainNavbar() {
             <Link href="/rooms" className="font-medium text-slate-700 hover:text-blue-600 transition-colors">Rooms</Link>
             <Link href="/add-room" className="font-medium text-slate-700 hover:text-blue-600 transition-colors">Add Room</Link>
             <Link href="/my-listings" className="font-medium text-slate-700 hover:text-blue-600 transition-colors">My Listings</Link>
-            <Link href="/dashboard" className="font-medium text-slate-700 hover:text-blue-600 transition-colors">Dashboard</Link>
+            <Link href="/dashboard" className="font-medium text-slate-700 hover:text-blue-600 transition-colors">My Bookings</Link>
           </div>
 
           <div className="hidden md:flex items-center gap-4">
@@ -85,7 +85,7 @@ export function MainNavbar() {
                       <p className="text-xs truncate text-slate-500">{session?.user?.email}</p>
                     </div>
                     <Link href="/dashboard" className="px-4 py-2 text-sm hover:bg-muted flex items-center gap-3 transition-colors">
-                      <LayoutDashboard className="w-4 h-4" /> Dashboard
+                      <LayoutDashboard className="w-4 h-4" /> My Bookings
                     </Link>
                     <Link href="/settings" className="px-4 py-2 text-sm hover:bg-muted flex items-center gap-3 transition-colors">
                       <User className="w-4 h-4" /> Settings
@@ -117,8 +117,8 @@ export function MainNavbar() {
           <Link href="/" className="block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-50 rounded-xl">Home</Link>
           <Link href="/rooms" className="block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-50 rounded-xl">Rooms</Link>
           <Link href="/add-room" className="block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-50 rounded-xl">Add Room</Link>
-          <Link href="/my-listings" className="block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-50 rounded-xl">my Listings</Link>
-          <Link href="/dashboard" className="block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-50 rounded-xl">Dashboard</Link>
+          <Link href="/my-listings" className="block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-50 rounded-xl">My Listings</Link>
+          <Link href="/dashboard" className="block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-50 rounded-xl">My Bookings</Link>
           <div className="pt-4 border-t border-border mt-4">
 
             <div className="grid grid-cols-2 gap-4">
