@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Chip } from '@heroui/react';
-import CancelEnrollButton from "./CancelEnrollButton";
+import CancelEnrollButton from "./BookingCancelAlert";
 
 const EnrollmentCard = () => {
     return (

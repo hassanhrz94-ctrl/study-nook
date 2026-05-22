@@ -4,7 +4,7 @@ import { Button, Chip } from '@heroui/react';
 import Link from 'next/link';
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
-import CancelEnrollButton from '@/components/CancelEnrollButton';
+import CancelEnrollButton, { BookingCancelAlert } from '@/components/BookingCancelAlert';
 // import CancelEnrollButton from '@/components/CancelEnrollButton';
 
 export default async function DashboardPage() {
@@ -60,8 +60,8 @@ export default async function DashboardPage() {
                         <div className="p-12 text-center bg-slate-50 border rounded-2xl">
                             <p className="mb-4">No courses yet</p>
 
-                            <Link href="/courses">
-                                <Button>Browse Courses</Button>
+                            <Link href="/rooms">
+                                <Button>Browse Rooms</Button>
                             </Link>
                         </div>
                     ) : (
@@ -93,7 +93,7 @@ export default async function DashboardPage() {
                                                 Active
                                             </Chip>
 
-                                            {/* <CancelEnrollButton enrolmentId={enrollment?._id} token={token} /> */}
+                                            <BookingCancelAlert bookingId={enrollment?._id} />
                                         </div>
                                     </div>
                                 </div>
