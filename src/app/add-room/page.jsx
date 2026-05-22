@@ -1,169 +1,136 @@
-"use client"
+"use client";
 
-import { FieldError, Input, Label, TextField, Select, ListBox, TextArea, Button, Card } from "@heroui/react";
+import { useState } from "react";
+import { Button, Input, TextArea, Checkbox } from "@heroui/react";
+import toast, { Toaster } from "react-hot-toast";
+import { useRouter } from "next/navigation";
+
+const amenitiesOptions = [
+  { label: "Whiteboard", icon: "✏️" },
+  { label: "Projector", icon: "📽️" },
+  { label: "Wi-Fi", icon: "📶" },
+  { label: "Power Outlets", icon: "🔌" },
+  { label: "Quiet Zone", icon: "🤫" },
+  { label: "Air Conditioning", icon: "❄️" },
+];
 
 const AddRoomPage = () => {
-    const onSubmit = async (e) => {
-        e.preventDefault()
-        const formData = new FormData(e.currentTarget)
-        const room = Object.fromEntries(formData.entries())
+  const router = useRouter();
+  const [amenities, setAmenities] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-        console.log(room)
+  const handleAmenities = (value) => {
+    setAmenities((prev) =>
+      prev.includes(value) ? prev.filter((i) => i !== value) : [...prev, value]
+    );
+  };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const form = e.target;
 
-// import data form backend 
-        const res = await fetch('http://localhost:5000/books', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(room)
-        })
+    const roomData = {
+      roomName: form.roomName.value,
+      description: form.description.value,
+      image: form.image.value,
+      floor: form.floor.value,
+      capacity: Number(form.capacity.value),
+      hourlyRate: Number(form.hourlyRate.value),
+      amenities,
+    };
 
-        const data = await res.json()
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/rooms`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(roomData),
+      });
+      const data = await res.json();
 
-
+      if (res.ok) {
+        toast.success("Room added successfully!");
+        form.reset();
+        setAmenities([]);
+        router.push("/my-rooms");
+      } else {
+        toast.error(data?.message || "Failed to add room");
+      }
+    } catch {
+      toast.error("Something went wrong");
+    } finally {
+      setIsLoading(false);
     }
+  };
 
-    return (
-        <div className="p-5 max-w-7xl mx-auto">
-         <h1 className="text-2xl font-bold">Add Room</h1>
+  return (
+    <div className="min-h-screen bg-gray-50 py-10 px-4">
+      <Toaster position="top-right" />
 
-         <Card>
-        <form
-        onSubmit={onSubmit}
-            className="p-10 space-y-8 w-3xl"
-          >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Room Name */}
-              <div className="md:col-span-2">
-                <TextField name="roomName" isRequired>
-                  <Label>Room Name</Label>
-                  <Input placeholder="Bali Paradise" className="rounded-2xl" />
-                  <FieldError />
-                </TextField>
-              </div>
+      <div className="max-w-3xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-800">Add New Room</h1>
+          <p className="text-gray-500 mt-1 text-sm">Fill in the details to list your meeting room</p>
+        </div>
 
-              {/* Country */}
-              <TextField name="country" isRequired>
-                <Label>Country</Label>
-                <Input placeholder="Indonesia" className="rounded-2xl" />
-                <FieldError />
-              </TextField>
+        {/* Card */}
+        <div className="bg-white rounded-2xl shadow-md p-6 md:p-10">
+          <form onSubmit={handleSubmit} className="space-y-5">
 
-              {/* Category - Updated Select Component */}
-              <div>
-                <Select
-                  name="category"
-                  isRequired
-                  className="w-full"
-                  placeholder="Select category"
-                >
-                  <Label>Category</Label>
-                  <Select.Trigger className="rounded-2xl">
-                    <Select.Value />
-                    <Select.Indicator />
-                  </Select.Trigger>
-                  <Select.Popover>
-                    <ListBox>
-                      <ListBox.Item id="Beach" textValue="Beach">
-                        Beach
-                        <ListBox.ItemIndicator />
-                      </ListBox.Item>
-                      <ListBox.Item id="Mountain" textValue="Mountain">
-                        Mountain
-                        <ListBox.ItemIndicator />
-                      </ListBox.Item>
-                      <ListBox.Item id="City" textValue="City">
-                        City
-                        <ListBox.ItemIndicator />
-                      </ListBox.Item>
-                      <ListBox.Item id="Adventure" textValue="Adventure">
-                        Adventure
-                        <ListBox.ItemIndicator />
-                      </ListBox.Item>
-                      <ListBox.Item id="Cultural" textValue="Cultural">
-                        Cultural
-                        <ListBox.ItemIndicator />
-                      </ListBox.Item>
-                      <ListBox.Item id="Luxury" textValue="Luxury">
-                        Luxury
-                        <ListBox.ItemIndicator />
-                      </ListBox.Item>
-                    </ListBox>
-                  </Select.Popover>
-                </Select>
-              </div>
+            {/* Row 1 */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Input label="Room Name" name="roomName" placeholder="Conference Room A" variant="bordered" radius="lg" isRequired />
+              <Input label="Floor" name="floor" placeholder="3rd Floor" variant="bordered" radius="lg" isRequired />
+              <Input type="number" label="Capacity" name="capacity" placeholder="10" variant="bordered" radius="lg" isRequired />
+              <Input type="number" label="Hourly Rate ($)" name="hourlyRate" placeholder="25" variant="bordered" radius="lg" isRequired />
+            </div>
 
-              {/* Price */}
-              <TextField name="price" type="number" isRequired>
-                <Label>Price (USD)</Label>
-                <Input
-                  type="number"
-                  placeholder="1299"
-                  className="rounded-2xl"
-                />
-                <FieldError />
-              </TextField>
+            {/* Image URL */}
+            <Input type="url" label="Image URL" name="image" placeholder="https://example.com/room.jpg" variant="bordered" radius="lg" isRequired />
 
-              {/* Duration */}
-              <TextField name="duration" isRequired>
-                <Label>Duration</Label>
-                <Input
-                  placeholder="7 Days / 6 Nights"
-                  className="rounded-2xl"
-                />
-                <FieldError />
-              </TextField>
+            {/* Description */}
+            <TextArea label="Description" name="description" placeholder="Write room description..." variant="bordered" radius="lg" minRows={4} isRequired />
 
-              {/* Departure Date */}
-              <div className="md:col-span-2">
-                <TextField name="departureDate" type="date" isRequired>
-                  <Label>Departure Date</Label>
-                  <Input type="date" className="rounded-2xl" />
-                  <FieldError />
-                </TextField>
-              </div>
-
-              {/* Image URL - Removed preview */}
-              <div className="md:col-span-2">
-                <TextField name="imageUrl" isRequired>
-                  <Label>Image URL</Label>
-                  <Input
-                    type="url"
-                    placeholder="https://example.com/bali-paradise.jpg"
-                    className="rounded-2xl"
-                  />
-                  <FieldError />
-                </TextField>
-              </div>
-
-              {/* Description */}
-              <div className="md:col-span-2">
-                <TextField name="description" isRequired>
-                  <Label>Description</Label>
-                  <TextArea
-                    placeholder="Describe the travel experience..."
-                    className="rounded-3xl"
-                  />
-                  <FieldError />
-                </TextField>
+            {/* Amenities */}
+            <div>
+              <p className="text-sm font-semibold text-gray-700 mb-3">Amenities</p>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                {amenitiesOptions.map(({ label, icon }) => {
+                  const selected = amenities.includes(label);
+                  return (
+                    <div
+                      key={label}
+                      onClick={() => handleAmenities(label)}
+                      className={`flex items-center gap-2 p-3 rounded-xl border cursor-pointer transition-all
+                        ${selected
+                          ? "border-cyan-500 bg-cyan-50"
+                          : "border-gray-200 hover:border-cyan-300 hover:bg-gray-50"
+                        }`}
+                    >
+                      <span className="text-lg">{icon}</span>
+                      <Checkbox isSelected={selected} isReadOnly className="pointer-events-none">
+                        <span className="text-sm text-gray-700">{label}</span>
+                      </Checkbox>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
-            {/* Buttons */}
-
+            {/* Submit */}
             <Button
               type="submit"
-              variant="outline"
-              className=" rounded-none w-full bg-cyan-500 text-white"
+              isLoading={isLoading}
+              className="w-full h-12 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold rounded-xl text-base"
             >
-             Add Room
+              Add Room
             </Button>
           </form>
-         </Card>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default AddRoomPage;
