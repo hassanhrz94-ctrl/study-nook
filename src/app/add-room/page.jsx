@@ -41,7 +41,7 @@ const AddRoomPage = () => {
     };
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/rooms`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/books`, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(roomData),
@@ -52,7 +52,7 @@ const AddRoomPage = () => {
         toast.success("Room added successfully!");
         form.reset();
         setAmenities([]);
-        router.push("/my-rooms");
+        router.push("/my-listings");
       } else {
         toast.error(data?.message || "Failed to add room");
       }

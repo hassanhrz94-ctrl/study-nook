@@ -54,11 +54,11 @@ export default async function DashboardPage() {
 
                 {/* Enrollments */}
                 <div className="w-full md:w-3/4">
-                    <h1 className="text-3xl font-bold mb-6">My Enrolled Courses</h1>
+                    <h1 className="text-3xl font-bold mb-6">My Booked Rooms</h1>
 
                     {enrollments?.length === 0 ? (
                         <div className="p-12 text-center bg-slate-50 border rounded-2xl">
-                            <p className="mb-4">No courses yet</p>
+                            <p className="mb-4">No Rooms yet</p>
 
                             <Link href="/rooms">
                                 <Button>Browse Rooms</Button>
