@@ -41,7 +41,7 @@ const AddRoomPage = () => {
     };
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/books`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/booked`, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(roomData),
