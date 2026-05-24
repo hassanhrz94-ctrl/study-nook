@@ -1,6 +1,8 @@
 import EnrollmentButton from '@/components/EnrollmentButton';
 import { auth } from '@/lib/auth';
+
 import { headers } from 'next/headers';
+import { redirect } from 'next/navigation';
 import React from 'react';
 
 const fetchRoomDetails = async (id, token) => {
@@ -19,10 +21,18 @@ const fetchRoomDetails = async (id, token) => {
 
 const RoomDetailsPage = async ({ params }) => {
     const { id } = await params;
+ const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+if(!session){
+    redirect('/login')
+}
 
+console.log(session)
     const { token } = await auth.api.getToken({
         headers: await headers(),
     });
+    console.log(token)
 
     const roomDetails = await fetchRoomDetails(id, token);
 
