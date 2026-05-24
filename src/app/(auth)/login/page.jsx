@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { Lock, ArrowRight, MailCheck } from 'lucide-react';
 
 import Image from 'next/image';
-import { signIn } from '@/lib/auth-client';
+import { authClient, signIn } from '@/lib/auth-client';
 import toast from 'react-hot-toast';
 
 export default function Login() {
@@ -27,14 +27,14 @@ export default function Login() {
             return;
         }
 
-        // router.push("/")
+        router.push("/")
     }
 
-    // const handleGoogleLogin = async () => {
-    //     await authClient.signIn.social({
-    //         provider: "google",
-    //     });
-    // }
+    const handleGoogleLogin = async () => {
+        await authClient.signIn.social({
+            provider: "google",
+        });
+    }
 
     return (
         <div className="min-h-[80vh] flex flex-col bg-slate-50">
@@ -53,7 +53,7 @@ export default function Login() {
 
                         <div className="space-y-4">
                             <Button
-                                // onPress={handleGoogleLogin}
+                                onPress={handleGoogleLogin}
                                 variant="bordered"
                                 className="w-full h-12 font-bold rounded-2xl border-slate-200 hover:bg-slate-50 transition-colors gap-3"
                             >
