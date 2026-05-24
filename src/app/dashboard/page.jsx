@@ -39,14 +39,13 @@ export default async function DashboardPage() {
                 {/* Profile */}
                 <div className="w-full md:w-1/4">
                     <div className="p-6 bg-white border rounded-2xl">
-                        <Image
-                            src={session?.user?.image}
-                            alt="profile"
-                            width={96}
-                            height={96}
-                            className="w-24 h-24 rounded-full"
-                        />
-
+                      <Image
+  src={session?.user?.image || "/default-avatar.png"}
+  alt="profile"
+  width={96}
+  height={96}
+  className="w-24 h-24 rounded-full"
+/>
                         <h2 className="text-xl font-bold mt-4">{session?.user?.name}</h2>
                         <p className="text-sm text-slate-500">{session?.user?.email}</p>
                     </div>
@@ -71,13 +70,13 @@ export default async function DashboardPage() {
                                     key={enrollment?._id}
                                     className="flex gap-4 p-4 bg-white border rounded-xl"
                                 >
-                                    <Image
-                                        src={enrollment?.thumbnail}
-                                        alt="course"
-                                        width={120}
-                                        height={90}
-                                        className="rounded-lg"
-                                    />
+                                 <Image
+  src={enrollment?.thumbnail || "/default-room.jpg"}
+  alt="room"
+  width={120}
+  height={90}
+  className="rounded-lg"
+/>
 
                                     <div className="flex flex-col grow justify-between">
                                         <div>
